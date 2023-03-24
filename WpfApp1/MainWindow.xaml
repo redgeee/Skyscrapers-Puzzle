@@ -9,42 +9,21 @@
     <Grid>
 
         <Grid x:Name="playfield" Margin="235,66,235,66">
-            <Grid.RowDefinitions>
 
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="83*"></ColumnDefinition>
-                <ColumnDefinition Width="83*"></ColumnDefinition>
-                <ColumnDefinition Width="83*"></ColumnDefinition>
-                <ColumnDefinition Width="83*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+
 
 
 
 
         </Grid>
-        <Grid Margin="236,363,236,10">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="0" Grid.Column="0" Content="1" Click="Button_Click"/>
-            <Button Grid.Row="0" Grid.Column="1" Content="2" Click="Button_Click"></Button>
-            <Button Grid.Row="0" Grid.Column="2" Content="3" Click="Button_Click"></Button>
-            <Button Grid.Row="0" Grid.Column="3" Content="4" Click="Button_Click"></Button>
+        <Grid x:Name="buttons" Margin="236,363,236,10">
+
+
         </Grid>
         <Label Content="Label" HorizontalAlignment="Left" Margin="247,35,0,0" VerticalAlignment="Top"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="340,35,0,0" VerticalAlignment="Top"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="433,35,0,0" VerticalAlignment="Top"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="526,35,0,0" VerticalAlignment="Top"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="416,35,0,0" VerticalAlignment="Top"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="491,35,0,0" VerticalAlignment="Top"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="56,354,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
     </Grid>
 </Window>

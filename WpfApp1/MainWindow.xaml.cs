@@ -20,17 +20,35 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int CountColumn = 4;
-        public int CountRow = 4;
+        public static int countNumbers = 5;
+        public int CountColumn = countNumbers;
+        public int CountRow = countNumbers;
         List<List<TextBlock>> quads = new List<List<TextBlock>>();
         public TextBlock selected_quad;
+        int[,] answeredField;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            int[,] answeredField = generateLevel(CountColumn, CountRow);
+            answeredField = generateLevel(CountColumn, CountRow);
+            buttons.RowDefinitions.Add(new RowDefinition());
+            for (int i = 0; i < countNumbers; i++)
+            {
+                playfield.RowDefinitions.Add(new RowDefinition());
+                playfield.ColumnDefinitions.Add(new ColumnDefinition());
+                Button button = new Button();
+                button.Content = (i + 1).ToString();
+                button.Click += Button_Click;
 
+
+                buttons.ColumnDefinitions.Add(new ColumnDefinition());
+                buttons.Children.Add(button);
+                Grid.SetColumn(button, i);
+                Grid.SetRow(button, 0);
+
+            }
+            
 
             for (int i = 0; i < CountColumn; i++)
             {
@@ -60,7 +78,27 @@ namespace WpfApp1
                     quads[i].Add(tb);
                 }
             }
+            
 
+        }
+        private void checkSolution()
+        {
+            int finCount = CountColumn * CountRow;
+            int count = 0;
+            for (int i = 0; i < answeredField.GetLength(0); i++)
+            {
+                for (int j = 0; j < answeredField.GetLength(1); j++)
+                {
+                    if(answeredField[i, j] == int.Parse(quads[i][j].Text))
+                    {
+                        count++;
+                    }
+                }
+            }
+            if (finCount == count)
+            {
+                MessageBox.Show("Done");
+            }
         }
         private void quad_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -87,6 +125,7 @@ namespace WpfApp1
             {
                 Button btn = sender as Button;
                 selected_quad.Text = "\r\n" + btn.Content.ToString();
+                checkSolution();
             }
 
         }
@@ -112,7 +151,7 @@ namespace WpfApp1
                     }
 
 
-                    int rand = getRandom(random, 1, 5, numbers.Concat(numbersRow).ToList());
+                    int rand = getRandom(random, 1, CountColumn + 1, numbers.Concat(numbersRow).ToList());
 
                     ansField[i, j] = rand;
                     numbers.Add(rand);
@@ -134,6 +173,68 @@ namespace WpfApp1
             while (exclude.Contains(result));
 
             return result;
+        }
+        public List<List<int>> getSolution(List<List<TextBlock>> quads)
+        {
+            List<List<int>> solution = new List<List<int>>();
+            solution.Add(new List<int>());
+            solution.Add(new List<int>());
+            solution.Add(new List<int>());
+            solution.Add(new List<int>());
+            for (int i = 0; i < CountColumn; i++)
+            {
+                int[] numbs = new int[CountColumn];
+                for (int j = 0; j < CountRow; j++)
+                {
+                    numbs[j] = int.Parse(quads[i][j].Text);
+                }
+                solution[0].Add(getHighSolution(numbs));
+                solution[2].Add(getHighSolution(numbs.Reverse().ToArray()));
+
+            }
+
+            for (int i = 0; i < CountColumn; i++)
+            {
+                solution.Add(new List<int>());
+                int[] numbs = new int[CountColumn];
+                for (int j = 0; j < CountRow; j++)
+                {
+                    numbs[j] = int.Parse(quads[j][i].Text);
+                }
+                solution[1].Add(getHighSolution(numbs));
+                solution[3].Add(getHighSolution(numbs.Reverse().ToArray()));
+            }
+
+            return solution;
+        }
+
+        public int getHighSolution(int[] lineTowers)
+        {
+            int count = 1;
+            int max = lineTowers[0];
+            for (int i = 1; i < lineTowers.Length; i++)
+            {
+                if (max < lineTowers[i])
+                {
+                    count++;
+                    max = lineTowers[i];
+                }
+            }
+            return count;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            string result = "";
+            foreach (List<int> listInt in getSolution(quads))
+            {
+                foreach (int item in listInt)
+                {
+                    result += item.ToString() + " ";
+                }
+                result += "\n";
+            }
+            MessageBox.Show(result);
         }
     }
 }
