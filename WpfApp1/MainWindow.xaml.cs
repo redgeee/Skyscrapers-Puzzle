@@ -12,15 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WpfApp1
 {
+
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static int countNumbers = 5;
+        public static int countNumbers = 4;
         public int CountColumn = countNumbers;
         public int CountRow = countNumbers;
         List<List<TextBlock>> quads = new List<List<TextBlock>>();
@@ -30,6 +32,8 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+
+
 
             answeredField = generateLevel(CountColumn, CountRow);
             buttons.RowDefinitions.Add(new RowDefinition());
@@ -58,6 +62,8 @@ namespace WpfApp1
                     Border brd = new Border();
                     brd.BorderBrush = new SolidColorBrush(Colors.Black);
                     brd.BorderThickness = new Thickness(1);
+                    Brush b = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                    brd.Background = b;
 
                     playfield.Children.Add(brd);
                     Grid.SetColumn(brd, i);
@@ -124,7 +130,7 @@ namespace WpfApp1
             if (selected_quad != null)
             {
                 Button btn = sender as Button;
-                selected_quad.Text = "\r\n" + btn.Content.ToString();
+                selected_quad.Text = "\n" + btn.Content.ToString();
                 checkSolution();
             }
 

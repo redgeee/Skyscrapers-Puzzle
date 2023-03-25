@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Game" Height="450" Width="800">
     <Grid>
+        <Border>
+            <Border.Background>
+                <ImageBrush x:Name="image" Stretch="UniformToFill" ImageSource="/1_artas27_anime_girl_near_skyscrapers_edd86b67-162c-4558-b7e3-ae7caa28c09f.8LYFz.png"/>
+            </Border.Background>
+        </Border>
 
         <Grid x:Name="playfield" Margin="235,66,235,66">
 
