@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,15 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WpfApp1
 {
+
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static int countNumbers = 5;
+        public static int countNumbers = 4;
         public int CountColumn = countNumbers;
         public int CountRow = countNumbers;
         List<List<TextBlock>> quads = new List<List<TextBlock>>();
@@ -30,6 +32,7 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+
 
             answeredField = generateLevel(CountColumn, CountRow);
             buttons.RowDefinitions.Add(new RowDefinition());
@@ -48,7 +51,7 @@ namespace WpfApp1
                 Grid.SetRow(button, 0);
 
             }
-            
+
 
             for (int i = 0; i < CountColumn; i++)
             {
@@ -58,6 +61,8 @@ namespace WpfApp1
                     Border brd = new Border();
                     brd.BorderBrush = new SolidColorBrush(Colors.Black);
                     brd.BorderThickness = new Thickness(1);
+                    Brush b = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                    brd.Background = b;
 
                     playfield.Children.Add(brd);
                     Grid.SetColumn(brd, i);
@@ -78,7 +83,50 @@ namespace WpfApp1
                     quads[i].Add(tb);
                 }
             }
-            
+
+            List<List<int>> solv = getSolution(quads);
+
+
+            up_prompt.RowDefinitions.Add(new RowDefinition());
+            for (int i = 0; i < countNumbers; i++)
+            {
+                up_prompt.ColumnDefinitions.Add(new ColumnDefinition());
+                TextBlock tb = new TextBlock();
+                tb.Text = solv[0][i].ToString();
+                up_prompt.Children.Add(tb);
+                Grid.SetColumn(tb, i);
+                Grid.SetRow(tb, 0);
+            }
+            down_prompt.RowDefinitions.Add(new RowDefinition());
+            for (int i = 0; i < countNumbers; i++)
+            {
+                down_prompt.ColumnDefinitions.Add(new ColumnDefinition());
+                TextBlock tb = new TextBlock();
+                tb.Text = solv[2][i].ToString();
+                down_prompt.Children.Add(tb);
+                Grid.SetColumn(tb, i);
+                Grid.SetRow(tb, 0);
+            }
+            left_prompt.ColumnDefinitions.Add(new ColumnDefinition());
+            for (int i = 0; i < countNumbers; i++)
+            {
+                left_prompt.RowDefinitions.Add(new RowDefinition());
+                TextBlock tb = new TextBlock();
+                tb.Text = solv[1][i].ToString();
+                left_prompt.Children.Add(tb);
+                Grid.SetColumn(tb, 0);
+                Grid.SetRow(tb, i);
+            }
+            right_prompt.ColumnDefinitions.Add(new ColumnDefinition());
+            for (int i = 0; i < countNumbers; i++)
+            {
+                right_prompt.RowDefinitions.Add(new RowDefinition());
+                TextBlock tb = new TextBlock();
+                tb.Text = solv[3][i].ToString();
+                right_prompt.Children.Add(tb);
+                Grid.SetColumn(tb, 0);
+                Grid.SetRow(tb, i);
+            }
 
         }
         private void checkSolution()
@@ -89,7 +137,7 @@ namespace WpfApp1
             {
                 for (int j = 0; j < answeredField.GetLength(1); j++)
                 {
-                    if(answeredField[i, j] == int.Parse(quads[i][j].Text))
+                    if (answeredField[i, j] == int.Parse(quads[i][j].Text))
                     {
                         count++;
                     }
@@ -124,7 +172,7 @@ namespace WpfApp1
             if (selected_quad != null)
             {
                 Button btn = sender as Button;
-                selected_quad.Text = "\r\n" + btn.Content.ToString();
+                selected_quad.Text = "\n" + btn.Content.ToString();
                 checkSolution();
             }
 
@@ -132,37 +180,53 @@ namespace WpfApp1
 
         private int[,] generateLevel(int countColumn, int countRow)
         {
-            List<int> numbers = new List<int>();
-            List<int> numbersRow = new List<int>();
-
-            Random random = new Random();
-            int[,] ansField = new int[countColumn, countRow];
-
-            for (int i = 0; i < countColumn; i++)
+            while (true)
             {
-                numbers.Clear();
-
-                for (int j = 0; j < countRow; j++)
+                try
                 {
-                    numbersRow.Clear();
-                    for (int k = 0; k < countColumn; k++)
+
+                    int[,] matrix = new int[countColumn, countRow];
+
+                    Random rnd = new Random();
+
+                    for (int i = 0; i < matrix.GetLength(0); i++)
                     {
-                        numbersRow.Add(ansField[k, j]);
+                        List<int> rowValues = new List<int>();
+                        for (int k = 0; k < CountColumn; k++)
+                        {
+                            rowValues.Add(k + 1);
+                        }
+                        for (int j = 0; j < matrix.GetLength(1); j++)
+                        {
+
+                            List<int> columnValues = new List<int>();
+                            for (int k = 0; k < matrix.GetLength(0); k++)
+                            {
+                                columnValues.Add(matrix[k, j]);
+                            }
+
+                            List<int> resultValues = rowValues.ToList();
+                            foreach (int item in columnValues)
+                            {
+                                resultValues.Remove(item);
+                            }
+
+                            int newValue = resultValues[rnd.Next(resultValues.Count)];
+                            matrix[i, j] = newValue;
+                            rowValues.Remove(newValue);
+
+                        }
                     }
 
-
-                    int rand = getRandom(random, 1, CountColumn + 1, numbers.Concat(numbersRow).ToList());
-
-                    ansField[i, j] = rand;
-                    numbers.Add(rand);
+                    return matrix;
 
                 }
+                catch (Exception)
+                {
+                }
             }
-            
-            return ansField;
-
         }
-        
+
         public int getRandom(Random rand, int min, int max, List<int> exclude)
         {
             int result = 0;

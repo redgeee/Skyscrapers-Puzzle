@@ -1,0 +1,32 @@
+<Window x:Class="WpfApp1.Window2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Rules" Height="450" Width="800" ResizeMode="CanMinimize">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Rectangle Fill="{TemplateBinding Background}"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="434" VerticalAlignment="Center" Width="790" Source="/rules_image.png"/>
+        <TextBlock FontSize="16" HorizontalAlignment="Left" Margin="459,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="316" Height="422"><Run Text="Цель состоит в том, чтобы разместить небоскребы во всех ячейках сетки в соответствии с правилами:"/><LineBreak/><Run/><LineBreak/><Run Text="- Высота небоскребов составляет от 1 до размера сетки, т.е. от 1 до 4 для головоломки 4х4."/><LineBreak/><Run/><LineBreak/><Run Text="- У вас не может быть двух небоскребов одинаковой высоты в одной строке или столбце."/><LineBreak/><Run/><LineBreak/><Run Text="- Цифры по бокам сетки указывают, сколько небоскребов вы увидели бы, если бы посмотрели в направлении стрелки."/><LineBreak/><Run/><LineBreak/><Run Text="Расставьте цифры в каждой ячейке, чтобы указать высоту небоскребов."/></TextBlock>
+        <Button x:Name="play_btn" Content="Назад" Background="#01000000" Foreground="#800224" BorderBrush="Transparent" Focusable="False" FontWeight="Bold" FontSize="35" Padding="20 10" BorderThickness="1" Margin="-53,343,633,-37" Click="play_btn_Click">
+            <Button.Effect>
+                <DropShadowEffect Color="Black" ShadowDepth="4"/>
+            </Button.Effect>
+        </Button>
+    </Grid>
+</Window>
