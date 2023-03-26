@@ -109,16 +109,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="artas27_anime_girl_near_skyscrapers_94732473-e1aa-4a10-a22e-0464f4108819.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="artas27_anime_teacher_girl_explaining_game_rules_and_looking_at_ea98378e-4f7b-474d-ba6c-2e8c66a6c4d3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="artas27_anime_girl_near_skyscrapers_edd86b67-162c-4558-b7e3-ae7caa28c09f.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="1_artas27_anime_girl_near_skyscrapers_edd86b67-162c-4558-b7e3-ae7caa28c09f.8LYFz.png" />
+    <Resource Include="game_image.png" />
+    <Resource Include="main_menu_image.png" />
+    <Resource Include="rules_image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
