@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,8 +27,9 @@ namespace WpfApp1
         private void play_btn_Click(object sender, RoutedEventArgs e)
         {
             Window1 win2 = new Window1();
-            win2.Show();
             this.Close();
+            win2.Show();
+
         }
     }
 }
