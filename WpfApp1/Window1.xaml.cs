@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +36,10 @@ namespace WpfApp1
             Window2 win2 = new Window2();
             win2.Show();
             this.Close();
+        }
+        private void developers_btn_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO
         }
     }
 }
