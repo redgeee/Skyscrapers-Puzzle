@@ -138,7 +138,7 @@ namespace WpfApp1
                 
                 left_prompt.RowDefinitions.Add(new RowDefinition());
                 TextBlock tb = new TextBlock();
-                tb.Text = (countNumbers > 5 ? "" : "\n") + solv[1][i].ToString();
+                tb.Text = (countNumbers > 4 ? "" : "\n") + solv[1][i].ToString();
                 tb.FontSize = 30;
                 tb.TextAlignment = TextAlignment.Center;
                 tb.Effect = shadow;
@@ -151,7 +151,7 @@ namespace WpfApp1
             {
                 right_prompt.RowDefinitions.Add(new RowDefinition());
                 TextBlock tb = new TextBlock();
-                tb.Text = (countNumbers > 5 ? "" : "\n") + solv[3][i].ToString();
+                tb.Text = (countNumbers > 4 ? "" : "\n") + solv[3][i].ToString();
                 tb.FontSize = 30;
                 tb.TextAlignment = TextAlignment.Center;
                 tb.Effect = shadow;
