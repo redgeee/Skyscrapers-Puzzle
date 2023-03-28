@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -28,14 +29,24 @@ namespace WpfApp1
         List<List<TextBlock>> quads = new List<List<TextBlock>>();
         public TextBlock selected_quad;
         int[,] answeredField;
-
-        public MainWindow()
+        public int cumnumbers { set { countNumbers = value; CountColumn = value; CountRow = value; } }
+        public MainWindow(int difficult)
         {
+                cumnumbers = difficult;
+            
             InitializeComponent();
 
 
             answeredField = generateLevel(CountColumn, CountRow);
             buttons.RowDefinitions.Add(new RowDefinition());
+            Button button_clear = new Button();
+            button_clear.Content = "0";
+            button_clear.Click += Button_Clear_Click;
+            buttons.ColumnDefinitions.Add(new ColumnDefinition());
+            buttons.Children.Add(button_clear);
+            Grid.SetColumn(button_clear, 0);
+            Grid.SetRow(button_clear, 0);
+
             for (int i = 0; i < countNumbers; i++)
             {
                 playfield.RowDefinitions.Add(new RowDefinition());
@@ -47,7 +58,7 @@ namespace WpfApp1
 
                 buttons.ColumnDefinitions.Add(new ColumnDefinition());
                 buttons.Children.Add(button);
-                Grid.SetColumn(button, i);
+                Grid.SetColumn(button, i + 1);
                 Grid.SetRow(button, 0);
 
             }
@@ -69,7 +80,6 @@ namespace WpfApp1
                     Grid.SetRow(brd, j);
 
                     TextBlock tb = new TextBlock();
-                    tb.Text = answeredField[i, j].ToString();
                     playfield.Children.Add(tb);
 
                     Grid.SetColumn(tb, i);
@@ -84,15 +94,27 @@ namespace WpfApp1
                 }
             }
 
-            List<List<int>> solv = getSolution(quads);
-
+            List<List<int>> solv = getSolution(answeredField);
+            DropShadowEffect shadow = new DropShadowEffect();
+            Color clr = (Color)ColorConverter.ConvertFromString("#FF3333");
+            shadow.Color = clr;
+            shadow.Direction = 320;
+            shadow.ShadowDepth = 5;
+            Color color = (Color)ColorConverter.ConvertFromString("#3333FF");
+            SolidColorBrush br = new SolidColorBrush();
+            br.Color = color;
 
             up_prompt.RowDefinitions.Add(new RowDefinition());
             for (int i = 0; i < countNumbers; i++)
             {
                 up_prompt.ColumnDefinitions.Add(new ColumnDefinition());
                 TextBlock tb = new TextBlock();
+                
+                //tb.Foreground = br;
                 tb.Text = solv[0][i].ToString();
+                tb.FontSize = 30;
+                tb.TextAlignment = TextAlignment.Center;
+                tb.Effect = shadow;
                 up_prompt.Children.Add(tb);
                 Grid.SetColumn(tb, i);
                 Grid.SetRow(tb, 0);
@@ -103,6 +125,9 @@ namespace WpfApp1
                 down_prompt.ColumnDefinitions.Add(new ColumnDefinition());
                 TextBlock tb = new TextBlock();
                 tb.Text = solv[2][i].ToString();
+                tb.FontSize = 30;
+                tb.TextAlignment = TextAlignment.Center;
+                tb.Effect = shadow;
                 down_prompt.Children.Add(tb);
                 Grid.SetColumn(tb, i);
                 Grid.SetRow(tb, 0);
@@ -110,9 +135,13 @@ namespace WpfApp1
             left_prompt.ColumnDefinitions.Add(new ColumnDefinition());
             for (int i = 0; i < countNumbers; i++)
             {
+                
                 left_prompt.RowDefinitions.Add(new RowDefinition());
                 TextBlock tb = new TextBlock();
-                tb.Text = solv[1][i].ToString();
+                tb.Text = (countNumbers > 5 ? "" : "\n") + solv[1][i].ToString();
+                tb.FontSize = 30;
+                tb.TextAlignment = TextAlignment.Center;
+                tb.Effect = shadow;
                 left_prompt.Children.Add(tb);
                 Grid.SetColumn(tb, 0);
                 Grid.SetRow(tb, i);
@@ -122,7 +151,10 @@ namespace WpfApp1
             {
                 right_prompt.RowDefinitions.Add(new RowDefinition());
                 TextBlock tb = new TextBlock();
-                tb.Text = solv[3][i].ToString();
+                tb.Text = (countNumbers > 5 ? "" : "\n") + solv[3][i].ToString();
+                tb.FontSize = 30;
+                tb.TextAlignment = TextAlignment.Center;
+                tb.Effect = shadow;
                 right_prompt.Children.Add(tb);
                 Grid.SetColumn(tb, 0);
                 Grid.SetRow(tb, i);
@@ -137,7 +169,8 @@ namespace WpfApp1
             {
                 for (int j = 0; j < answeredField.GetLength(1); j++)
                 {
-                    if (answeredField[i, j] == int.Parse(quads[i][j].Text))
+                    string sr = quads[i][j].Text;
+                    if (answeredField[i, j] == (sr == "" ? -1 : int.Parse(sr)))
                     {
                         count++;
                     }
@@ -172,10 +205,20 @@ namespace WpfApp1
             if (selected_quad != null)
             {
                 Button btn = sender as Button;
-                selected_quad.Text = "\n" + btn.Content.ToString();
+                selected_quad.Text = "\n" + "\n" + btn.Content.ToString();
                 checkSolution();
             }
 
+        }
+
+        private void Button_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            if (selected_quad != null)
+            {
+               
+                selected_quad.Text = null;
+                
+            }
         }
 
         private int[,] generateLevel(int countColumn, int countRow)
@@ -238,7 +281,7 @@ namespace WpfApp1
 
             return result;
         }
-        public List<List<int>> getSolution(List<List<TextBlock>> quads)
+        public List<List<int>> getSolution(int[,] quads)
         {
             List<List<int>> solution = new List<List<int>>();
             solution.Add(new List<int>());
@@ -250,7 +293,7 @@ namespace WpfApp1
                 int[] numbs = new int[CountColumn];
                 for (int j = 0; j < CountRow; j++)
                 {
-                    numbs[j] = int.Parse(quads[i][j].Text);
+                    numbs[j] = int.Parse(quads[i,j].ToString());
                 }
                 solution[0].Add(getHighSolution(numbs));
                 solution[2].Add(getHighSolution(numbs.Reverse().ToArray()));
@@ -263,7 +306,7 @@ namespace WpfApp1
                 int[] numbs = new int[CountColumn];
                 for (int j = 0; j < CountRow; j++)
                 {
-                    numbs[j] = int.Parse(quads[j][i].Text);
+                    numbs[j] = int.Parse(quads[j, i].ToString());
                 }
                 solution[1].Add(getHighSolution(numbs));
                 solution[3].Add(getHighSolution(numbs.Reverse().ToArray()));
@@ -287,18 +330,11 @@ namespace WpfApp1
             return count;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void back_btn_Click(object sender, RoutedEventArgs e)
         {
-            string result = "";
-            foreach (List<int> listInt in getSolution(quads))
-            {
-                foreach (int item in listInt)
-                {
-                    result += item.ToString() + " ";
-                }
-                result += "\n";
-            }
-            MessageBox.Show(result);
+            Window1 win2 = new Window1();
+            this.Close();
+            win2.Show();
         }
     }
 }

@@ -25,6 +25,10 @@
             <Border.Background>
                 <ImageBrush x:Name="image" Stretch="UniformToFill" ImageSource="main_menu_image.png"/>
             </Border.Background>
+            <ComboBox x:Name="difficult_cmb" Margin="545,10,139,381" SelectedIndex="0">
+                
+            </ComboBox>
+
         </Border>
         <Button x:Name="play_btn" Content="Играть" Background="#01000000" Foreground="AliceBlue" BorderBrush="Transparent" Focusable="False" FontWeight="Bold" FontSize="35" Padding="20 10" BorderThickness="1" Margin="659,-6,10,367" Click="play_btn_Click">
             <Button.Effect>
@@ -37,6 +41,11 @@
             </Button.Effect>
         </Button>
         <Button x:Name="developers_btn" Content="Разработчики" Background="#01000000" Foreground="AliceBlue" BorderBrush="Transparent" Focusable="False" FontWeight="Bold" FontSize="35" Padding="20 10" BorderThickness="1" Margin="541,106,0,255" Click="developers_btn_Click">
+            <Button.Effect>
+                <DropShadowEffect Color="White" ShadowDepth="1"/>
+            </Button.Effect>
+        </Button>
+        <Button x:Name="exit" Content="Выход" Background="#01000000" Foreground="AliceBlue" BorderBrush="Transparent" Focusable="False" FontWeight="Bold" FontSize="35" Padding="20 10" BorderThickness="1" Margin="627,158,-22,208" Click="exit_btn_Click">
             <Button.Effect>
                 <DropShadowEffect Color="White" ShadowDepth="1"/>
             </Button.Effect>

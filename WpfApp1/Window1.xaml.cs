@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,14 +20,19 @@ namespace WpfApp1
     /// </summary>
     public partial class Window1 : Window
     {
+        string[] diff = { "Легкий", "Нормальный", "Сложный", "Невозможный" };
         public Window1()
         {
             InitializeComponent();
+            difficult_cmb.ItemsSource = diff;
         }
+
 
         private void play_btn_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow win2 = new MainWindow();
+            
+            MainWindow win2 = new MainWindow(Array.IndexOf(diff, difficult_cmb.Text)+4);
+            
             win2.Show();
             this.Close();
         }
@@ -39,7 +45,12 @@ namespace WpfApp1
         }
         private void developers_btn_Click(object sender, RoutedEventArgs e)
         {
-            // TODO
+            MessageBox.Show("Кустов Тимофей\n\rШадрин Андрей");
+        }
+
+        private void exit_btn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

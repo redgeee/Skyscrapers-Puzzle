@@ -25,22 +25,20 @@
             <Border.Background>
                 <ImageBrush x:Name="image" Stretch="UniformToFill" ImageSource="game_image.png"/>
             </Border.Background>
-            <Grid x:Name="left_prompt" Margin="116,72,655,71" Width="60" Height="450" Background="#FFC10000"/>
+
         </Border>
-        <Button x:Name="back_btn" Content="Назад" Background="#01000000" Foreground="#800224" BorderBrush="Transparent" Focusable="False" FontWeight="Bold" FontSize="35" Padding="20 10" BorderThickness="1" Margin="-53,655,644,-37">
+        <Button x:Name="back_btn" Content="Назад" Background="#01000000" Foreground="#800224" BorderBrush="Transparent" Focusable="False" FontWeight="Bold" FontSize="35" Padding="20 10" BorderThickness="1" Margin="26,624,692,72" Click="back_btn_Click">
             <Button.Effect>
                 <DropShadowEffect Color="Black" ShadowDepth="4"/>
             </Button.Effect>
         </Button>
 
-        <Grid x:Name="playfield" Margin="187,72,194,71" Width="450" Height="450" Background="#FFC10000"/>
-        <Grid x:Name="buttons" Margin="206,706,212,10" Width="450" Height="60" Background="#FFDF5757"/>
-        <Grid x:Name="up_prompt" Margin="190,0,191,533" Width="450" Height="60" Background="#FFC10000"/>
-        <Grid x:Name="down_prompt" Margin="187,533,194,0" Width="450" Height="60" Background="#FFC10000"/>
-        <Grid x:Name="right_prompt" Margin="655,72,116,71" Width="60" Height="450" Background="#FFC10000"/>
-
-
-        <Button Content="Button" HorizontalAlignment="Left" Margin="56,354,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Grid x:Name="playfield" Margin="206,88,199,222" Background="#FFC10000"/>
+        <Grid x:Name="buttons" Margin="206,619,212,72" Width="450" Background="#FFDF5757"/>
+        <Grid x:Name="up_prompt" Margin="206,28,212,687" Width="450" Height="60"/>
+        <Grid x:Name="down_prompt" Margin="206,538,212,177" Width="450" Height="60" />
+        <Grid x:Name="right_prompt" Margin="669,88,139,237" Width="60" Height="450" />
+        <Grid x:Name="left_prompt" Margin="146,88,662,237" Width="60" Height="450" />
 
     </Grid>
 </Window>
